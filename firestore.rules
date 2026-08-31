@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Messages collection: accessible for student submissions and teacher inbox
+    match /messages/{messageId} {
+      allow read, write: if true;
+    }
+    
+    // Summaries collection: AI trend summaries
+    match /summaries/{summaryId} {
+      allow read, write: if true;
+    }
+
+    // Trends collection fallback
+    match /trends/{trendId} {
+      allow read, write: if true;
+    }
+  }
+}

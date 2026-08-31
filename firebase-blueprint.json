@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Message": {
+      "title": "StudentMessage",
+      "description": "Anonymized student feedback message with AI-refined tone and teacher replies",
+      "type": "object",
+      "properties": {
+        "original_text": { "type": "string" },
+        "refined_text": { "type": "string" },
+        "category": { "type": "string", "enum": ["Academic", "Bullying/Social", "Class Policy", "Personal Support", "Other"] },
+        "status": { "type": "string", "enum": ["unread", "replied", "flagged"] },
+        "studentSessionId": { "type": "string" },
+        "moodEmoji": { "type": "string" },
+        "toneSummary": { "type": "string" },
+        "keyPoints": { "type": "array" },
+        "isUrgent": { "type": "boolean" },
+        "timestamp": { "type": "number" },
+        "reply": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "repliedAt": { "type": "number" },
+            "teacherEmail": { "type": "string" },
+            "teacherName": { "type": "string" }
+          }
+        }
+      },
+      "required": ["original_text", "refined_text", "category", "status", "studentSessionId"]
+    },
+    "Summary": {
+      "title": "TrendSummary",
+      "description": "AI-generated class sentiment and trend analytics summary",
+      "type": "object",
+      "properties": {
+        "executiveSummary": { "type": "string" },
+        "sentimentScore": { "type": "number" },
+        "sentimentLabel": { "type": "string" },
+        "keyThemes": { "type": "array" },
+        "empatheticActions": { "type": "array" },
+        "urgentAlerts": { "type": "array" },
+        "messageCount": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["executiveSummary", "sentimentScore", "sentimentLabel"]
+    }
+  },
+  "firestore": {
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Collection of student messages and feedback"
+    },
+    "/summaries/{summaryId}": {
+      "schema": "Summary",
+      "description": "Collection of AI trend summaries for teachers"
+    },
+    "/trends/{trendId}": {
+      "schema": "Summary",
+      "description": "Collection of trends"
+    }
+  }
+}
